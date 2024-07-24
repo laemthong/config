@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Port = 587;
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'tls';
-            $mail->Username = 'rewza568@gmail.com';
-            $mail->Password = 'khqp zihl rhfu ppdk';
+            $mail->Username = 'wegosport.67@gmail.com';
+            $mail->Password = 'iosj tuno uzlj frpm';
 
             // ตั้งค่าผู้ส่งและผู้รับ
-            $mail->setFrom('rewza568@gmail.com', 'Ryujin');
+            $mail->setFrom('wegosport.67@gmail.com', 'wegosport');
             $mail->addAddress($email);
 
             // ตั้งค่าหัวเรื่องและเนื้อหาอีเมล
