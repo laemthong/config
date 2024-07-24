@@ -1,22 +1,19 @@
 <?php
-include 'config.php';
+header('Content-Type: application/json');
 
-$pro_id = isset($_GET['pro_id']) ? $_GET['pro_id'] : '';
+include 'config.php'; // ไฟล์ config.php นี้ควรมีการเชื่อมต่อฐานข้อมูล
 
-// สร้าง SQL query สำหรับดึงข้อมูลโปรไฟล์
-$sql = "SELECT * FROM profile WHERE pro_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $pro_id);
-$stmt->execute();
-$result = $stmt->get_result();
+$user_id = $_GET['user_id'];
+
+$sql = "SELECT user_name, user_id, user_text FROM user_information WHERE user_id='$user_id'";
+$result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // ส่งข้อมูลในรูปแบบ JSON
-    echo json_encode($result->fetch_assoc());
+    $row = $result->fetch_assoc();
+    echo json_encode($row);
 } else {
-    echo json_encode(array("message" => "No profile found"));
+    echo json_encode(array("message" => "No user found"));
 }
 
-$stmt->close();
 $conn->close();
 ?>

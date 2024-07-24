@@ -1,23 +1,20 @@
 <?php
-include 'config.php';
+header('Content-Type: application/json');
 
+include 'config.php'; // ไฟล์ config.php นี้ควรมีการเชื่อมต่อฐานข้อมูล
 
-$pro_id = isset($_POST['pro_id']) ? $_POST['pro_id'] : '';
-$pro_name = isset($_POST['pro_name']) ? $_POST['pro_name'] : '';
-$pro_username = isset($_POST['pro_username']) ? $_POST['pro_username'] : '';
-$pro_brief = isset($_POST['pro_brief']) ? $_POST['pro_brief'] : '';
+$user_id = $_POST['user_id'];
+$user_name = $_POST['user_name'];
+$user_text = $_POST['user_text'];
 
-// สร้าง SQL query สำหรับอัพเดตข้อมูล
-$sql = "UPDATE profile SET pro_name = ?, pro_username = ?, pro_brief = ? WHERE pro_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ssss", $pro_name, $pro_username, $pro_brief, $pro_id);
+// อัปเดตข้อมูล user_text ใหม่
+$sql = "UPDATE user_information SET user_name='$user_name', user_text='$user_text' WHERE user_id='$user_id'";
 
-if ($stmt->execute()) {
+if ($conn->query($sql) === TRUE) {
     echo json_encode(array("message" => "Profile updated successfully"));
 } else {
-    echo json_encode(array("message" => "Failed to update profile"));
+    echo json_encode(array("message" => "Error updating profile: " . $conn->error));
 }
 
-$stmt->close();
 $conn->close();
 ?>
